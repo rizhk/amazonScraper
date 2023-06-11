@@ -1,4 +1,5 @@
-TEXT = """Are you tired of lugging around a heavy laptop or struggling with a small smartphone screen? Introducing the AOYODKG Android 10.0 Tablet, the perfect 2-in-1 solution for all your mobile computing needs!
+text,prododuct_link,audio_name,status
+"Are you tired of lugging around a heavy laptop or struggling with a small smartphone screen? Introducing the AOYODKG Android 10.0 Tablet, the perfect 2-in-1 solution for all your mobile computing needs!
 
  With its sleek 10-inch full HD IPS display, the AOYODKG Tablet delivers stunning visuals with vibrant colors and sharp details. The 2.5D curved glass screen adds a touch of elegance, making your viewing experience truly immersive.
 
@@ -58,4 +59,5 @@ Visit our website or call now to order your very own AOYODKG Android 10.0 Tablet
 
 Don't wait any longer. Get your AOYODKG Android 10.0 Tablet today and discover a world of endless possibilities. Upgrade your technology and transform the way you work, play, and connect. Order now!
 
-Thank you for watching, and we look forward to serving you with our exceptional AOYODKG Android 10.0 Tablet."""
+Thank you for watching, and we look forward to serving you with our exceptional AOYODKG Android 10.0 Tablet.",https://www.amazon.com/Android-Tablet-Keyboard-Processor-Version/dp/B09SHJLMTD/ref=sr_1_1_sspa?qid=1684408490&s=computers-intl-ship&sr=1-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyS1ZKSlEyRFhBUURHJmVuY3J5cHRlZElkPUEwNzU2MTU1M1lTN0ZDVURCSU1VJmVuY3J5cHRlZEFkSWQ9QTA2NTc2OTcyWTVUNUU0QlFMTkdTJndpZGdldE5hbWU9c3BfYXRmX2Jyb3dzZSZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1,AOYODKG,complete
+Test,https://www.amazon.com/Android-Tablet-Keyboard-Processor-Version/dp/B09SHJLMTD/ref=sr_1_1_sspa?qid=1684408490&s=computers-intl-ship&sr=1-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyS1ZKSlEyRFhBUURHJmVuY3J5cHRlZElkPUEwNzU2MTU1M1lTN0ZDVURCSU1VJmVuY3J5cHRlZEFkSWQ9QTA2NTc2OTcyWTVUNUU0QlFMTkdTJndpZGdldE5hbWU9c3BfYXRmX2Jyb3dzZSZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1,AOYODKG2,complete
