@@ -1,7 +1,22 @@
 # Description : Download images from pexels.com and save them into a folder
 import requests
 from pexels_api import API
-from config import API_KEY_PEXELS, IMAGES_FOLDER
+from config import API_KEY_PEXELS, IMAGES_FOLDER, CSV_COLUMNS
+import spacy
+
+
+# Load the English language model
+nlp = spacy.load("en_core_web_sm")
+
+textIndex = CSV_COLUMNS.index('text')
+productLinkIndex = CSV_COLUMNS.index('prododuct_link')
+audioNameIndex = CSV_COLUMNS.index('audio_name')
+statusIndex = CSV_COLUMNS.index('status')
+
+def getSentences(text):
+    doc = nlp(text)
+    sentences = [sent.string.strip() for sent in doc.sents]
+    return sentences
 
 
 def downloadAndSaveImage(main_word, category= 'technology'):

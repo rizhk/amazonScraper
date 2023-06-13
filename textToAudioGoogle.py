@@ -3,20 +3,20 @@ import os
 import pandas as pd
 from pydrive.drive import GoogleDrive
 from pydrive.auth import GoogleAuth
-from config import TEXT_CSV_FILE, COLUMNS, AUTDIOS_FOLDER
+from config import TEXT_CSV_FILE, CSV_COLUMNS, AUTDIOS_FOLDER
 
 
-textIndex = COLUMNS.index('text')
-productLinkIndex = COLUMNS.index('prododuct_link')
-audioNameIndex = COLUMNS.index('audio_name')
-statusIndex = COLUMNS.index('status')
+textIndex = CSV_COLUMNS.index('text')
+productLinkIndex = CSV_COLUMNS.index('prododuct_link')
+audioNameIndex = CSV_COLUMNS.index('audio_name')
+statusIndex = CSV_COLUMNS.index('status')
 
 # gauth = GoogleAuth()
 # gauth.LocalWebserverAuth()
 # drive = GoogleDrive(gauth)
 
 
-df = pd.read_csv(TEXT_CSV_FILE, names=COLUMNS, skiprows=[0])
+df = pd.read_csv(TEXT_CSV_FILE, names=CSV_COLUMNS, skiprows=[0])
 
 for index, row in df.iterrows():
     # print(row.tolist())
