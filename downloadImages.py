@@ -1,15 +1,12 @@
-import os
-from dotenv import load_dotenv
+# Description : Download images from pexels.com and save them into a folder
 import requests
+from pexels_api import API
+from config import API_KEY_PEXELS, IMAGES_FOLDER
 
-load_dotenv(dotenv_path='.env.dev')
 
-API_KEY_PEXELS = os.getenv("API_KEY_PEXELS")
-TEXT_CSV_FILE = os.getcwd() + os.getenv("TEXT_CSV_FILE")
-IMAGES_FOLDER = os.getcwd() + os.getenv("IMAGES_FOLDER")
-
-def downloadAndSaveImage(query):
+def downloadAndSaveImage(main_word, category= 'technology'):
     api = API(API_KEY_PEXELS)
+    query = f"{main_word} +: {category}"
     api.search(query, page=1, results_per_page=5)
     photos = api.get_entries()
     for photo in photos:
@@ -33,7 +30,7 @@ def saveImageIntoFile(imgUrl):
 
 
 if __name__ == "__main__":
-    downloadAndSaveImage('computers: tablets')
+    downloadAndSaveImage('tablets', 'technology')
 
 
 
