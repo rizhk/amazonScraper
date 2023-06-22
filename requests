@@ -1,0 +1,17 @@
+requests
+pexels_api
+spacy
+pandas
+os
+dotenv
+cv2
+gtts
+pydrive.drive
+pydrive.auth
+transformers
+SpeechT5Processor
+datasets
+torch
+soundfile
+datasets
+loadText

@@ -4,38 +4,81 @@ from pexels_api import API
 from config import API_KEY_PEXELS, IMAGES_FOLDER, CSV_COLUMNS, TEXT_CSV_FILE
 import spacy
 import pandas as pd
+import nltk
+# nltk.download('punkt')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('maxent_ne_chunker')
+# nltk.download('words')
+from nltk import ne_chunk
+from nltk.tokenize import word_tokenize
+from nltk.tag import pos_tag
+
+
 
 # Load the English language model
-nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load("en_core_web_lg")
 
 textIndex = CSV_COLUMNS.index('text')
 productLinkIndex = CSV_COLUMNS.index('prododuct_link')
 audioNameIndex = CSV_COLUMNS.index('audio_name')
 statusIndex = CSV_COLUMNS.index('status')
+
+
     
 
 def getSentences(text):
     doc = nlp(text)
-    sentences = [sent for sent in doc.sents]
+    sentences = [sent.text.strip() for sent in doc.sents]
     return sentences
 
 def getPartsOfSpeech(sentence):
     doc = nlp(sentence)
     # Get the parts of speech
     # token.pos_ is POS tag and token.text is the word
-    return [token for token in doc]
+    return [(token.pos_, token.text  )for token in doc]
 
 def getNamedEntityRelationships(sentence):
     doc = nlp(sentence)
     ner = [(ent.text, ent.start_char, ent.end_char, ent.label_) for ent in doc.ents]
     return ner
 
+
+def getEntitiesFromNltk(sentence):
+    # Tokenize the text
+    tokens = word_tokenize(sentence)
+
+    # Perform part-of-speech tagging
+    pos_tags = pos_tag(tokens)
+
+    # Perform named entity recognition
+    ner_tags = ne_chunk(pos_tags)
+
+    # Extract named entities
+    entities = []
+    for chunk in ner_tags:
+        print(chunk)
+        if hasattr(chunk, 'label'):
+            entities.append((chunk.label(), ' '.join(c[0] for c in chunk)))
+
+    return entities
+
 def getWordsForImageSearch(text):
     sentences = getSentences(text)
     print(sentences)
     for sentence in sentences:
-        words = getPartsOfSpeech(sentence.doc)
+        words = getPartsOfSpeech(sentence)
         entities = getNamedEntityRelationships(sentence)
+        print(len(entities))
+        if(len(entities) == 0):
+            # get entities from nltk
+            entities = getEntitiesFromNltk(text)
+
+        for entity in entities:
+            print(entity)
+            # if(entity[0] == 'PERSON'):
+            #     downloadAndSaveImage(entity[1])
+
+
         print(words)
         print(entities)
 

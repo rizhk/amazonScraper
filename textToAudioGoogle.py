@@ -14,21 +14,36 @@ statusIndex = CSV_COLUMNS.index('status')
 # gauth = GoogleAuth()
 # gauth.LocalWebserverAuth()
 # drive = GoogleDrive(gauth)
+class TextToAudio:
+
+    def __init__(self):
+        self.df = pd.read_csv(TEXT_CSV_FILE, names=CSV_COLUMNS, skiprows=[0])
 
 
-df = pd.read_csv(TEXT_CSV_FILE, names=CSV_COLUMNS, skiprows=[0])
+    def __textToAudio(self, text, lang='en', slow=False, fileName=0, folderName=""):
+        fullPath = AUTDIOS_FOLDER + folderName + '/'
+        if not os.path.exists(fullPath):
+            os.makedirs(fullPath)
 
-for index, row in df.iterrows():
-    # print(row.tolist())
-    if(df['status'][index] == 'complete' ):
-        continue
-    t1 = gtts.gTTS(text=row[textIndex], lang='en', slow=False)
-    audio_file = row[audioNameIndex]+ '.wav'
-    audio_file_path = AUTDIOS_FOLDER + audio_file
-    t1.save(audio_file)
-    os.rename(audio_file, audio_file_path)
-    df['status'][index] = 'complete'
-df.to_csv(TEXT_CSV_FILE, index=False, header=False)
+        t1 = gtts.gTTS(text=text, lang=lang, slow=slow)
+        audio_file = str(fileName) + '.wav'
+        audio_file_path = fullPath + audio_file
+        t1.save(audio_file)
+        os.rename(audio_file, audio_file_path)
+        return audio_file_path
+    
+    def convert(self):
+        for index, row in self.df.iterrows():
+            if(self.df['status'][index] == 'complete' ):
+                continue
+            self.__textToAudio(row[textIndex], fileName=index, folderName = row[audioNameIndex])
+            self.df['status'][index] = 'complete'
+        self.df.to_csv(TEXT_CSV_FILE, index=False, header=False)
+
+
+if __name__ == "__main__":
+    textToAudio = TextToAudio()
+    textToAudio.convert()
 
 
 
