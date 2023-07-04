@@ -64,24 +64,37 @@ def getEntitiesFromNltk(sentence):
 
 def getWordsForImageSearch(text):
     sentences = getSentences(text)
-    print(sentences)
-    for sentence in sentences:
-        words = getPartsOfSpeech(sentence)
-        entities = getNamedEntityRelationships(sentence)
-        print(len(entities))
-        if(len(entities) == 0):
-            # get entities from nltk
-            entities = getEntitiesFromNltk(text)
+    sentence_dict = {}
 
-        for entity in entities:
-            print(entity)
-            # if(entity[0] == 'PERSON'):
-            #     downloadAndSaveImage(entity[1])
+    for sentenceIndex, sentence in enumerate(sentences):
+        partsOfSpeech = getPartsOfSpeech(sentence)
+        words_list = []
+        for index, (wordType, word) in enumerate(partsOfSpeech):
+            main_word = ''
+            if(wordType == 'NOUN'):
+                # check if previous tuple in partsOfSpeech is ADJ
+                # if yes, then append that word with this word
+                if(index > 0 and partsOfSpeech[index-1][0] == 'ADJ'):
+                    main_word = partsOfSpeech[index-1][1] + ' ' + word
+                else:
+                    main_word = word
+                words_list.append(main_word)
+                
+        sentence_dict[sentenceIndex] = words_list
 
+        print(sentence_dict)
 
-        print(words)
-        print(entities)
+    return sentence_dict
+        # entities = getNamedEntityRelationships(sentence)
+        # print(len(entities))
+        # if(len(entities) == 0):
+        #     # get entities from nltk
+        #     entities = getEntitiesFromNltk(text)
 
+        # for entity in entities:
+        #     print(entity)
+        #     # if(entity[0] == 'PERSON'):
+        #     #     getImagesFromText(entity[1])    
 
 def imagesBasedOnSearchedWords():
     df = pd.read_csv(TEXT_CSV_FILE, names=CSV_COLUMNS, skiprows=[0])
@@ -90,13 +103,16 @@ def imagesBasedOnSearchedWords():
         # print(row.tolist())
         if(df['status'][index] == 'complete' ):
             continue
-        getWordsForImageSearch(row[textIndex])
+        words_dict = getWordsForImageSearch(row[textIndex])
+        for sentenceIndex, words_list in words_dict.items():
+            for word in words_list:
+                getImagesFromText(word)
         df['status'][index] = 'complete'
     df.to_csv(TEXT_CSV_FILE, index=False, header=False)
 
 
 
-def downloadAndSaveImage(main_word, category= 'technology'):
+def getImagesFromText(main_word, category= 'technology'):
     api = API(API_KEY_PEXELS)
     query = f"{main_word} +: {category}"
     api.search(query, page=1, results_per_page=5)
@@ -122,6 +138,6 @@ def saveImageIntoFile(imgUrl):
 
 
 if __name__ == "__main__":
-    # downloadAndSaveImage('tablets', 'technology')
+    # getImagesFromText('tablets', 'technology')
     imagesBasedOnSearchedWords()
 

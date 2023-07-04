@@ -20,7 +20,7 @@ class TextToAudio:
         self.df = pd.read_csv(TEXT_CSV_FILE, names=CSV_COLUMNS, skiprows=[0])
 
 
-    def __textToAudio(self, text, lang='en', slow=False, fileName=0, folderName=""):
+    def __textToAudio(self, text, lang='en', slow=False, folderName="", fileName=0):
         fullPath = AUTDIOS_FOLDER + folderName + '/'
         if not os.path.exists(fullPath):
             os.makedirs(fullPath)
@@ -36,7 +36,7 @@ class TextToAudio:
         for index, row in self.df.iterrows():
             if(self.df['status'][index] == 'complete' ):
                 continue
-            self.__textToAudio(row[textIndex], fileName=index, folderName = row[audioNameIndex])
+            self.__textToAudio(row[textIndex], folderName = row[audioNameIndex], fileName=index)
             self.df['status'][index] = 'complete'
         self.df.to_csv(TEXT_CSV_FILE, index=False, header=False)
 
